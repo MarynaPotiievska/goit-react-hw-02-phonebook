@@ -19,7 +19,6 @@ export class App extends Component {
       contact => contact.name.toLowerCase() === values.name.toLowerCase()
     );
 
-    console.log(isInContacts);
     if (isInContacts.length === 0) {
       this.setState(prevState => ({
         contacts: [values, ...prevState.contacts],
@@ -44,7 +43,6 @@ export class App extends Component {
   filteredContacts = () => {
     const { filter, contacts } = this.state;
     const filterValue = filter.trim().toLowerCase();
-    console.log(filterValue);
     if (filterValue !== '') {
       const filteredArr = contacts.filter(({ name }) =>
         name.toLowerCase().includes(filterValue)
@@ -56,8 +54,7 @@ export class App extends Component {
   };
 
   render() {
-    const { contacts, filter } = this.state;
-    console.log(this.filteredContacts());
+    const { filter } = this.state;
 
     return (
       <div>
