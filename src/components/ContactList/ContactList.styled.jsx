@@ -31,9 +31,4 @@ export const ContactNumber = styled.span`
   font-size: 12px;
 `;
 
-export const DeleteButton = Button.withComponent('deletebutton');
-
-export const DefaultMessage = styled.p`
-  padding: 12px;
-  text-align: center;
-`;
+export const DeleteButton = Button.withComponent('button');

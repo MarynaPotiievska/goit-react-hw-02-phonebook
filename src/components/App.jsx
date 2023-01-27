@@ -4,7 +4,8 @@ import { nanoid } from 'nanoid';
 import ContactForm from './ContactForm';
 import ContactList from './ContactList';
 import Filter from './Filter';
-import { AppTitle, Title } from './App.styled';
+
+import { AppTitle, Title, DefaultMessage } from './App.styled';
 
 export class App extends Component {
   state = {
@@ -15,8 +16,10 @@ export class App extends Component {
   handleSubmit = values => {
     values.id = nanoid();
     const isInContacts = this.state.contacts.filter(
-      contact => contact.name === values.name
+      contact => contact.name.toLowerCase() === values.name.toLowerCase()
     );
+
+    console.log(isInContacts);
     if (isInContacts.length === 0) {
       this.setState(prevState => ({
         contacts: [values, ...prevState.contacts],
@@ -38,8 +41,24 @@ export class App extends Component {
     }));
   };
 
+  filteredContacts = () => {
+    const { filter, contacts } = this.state;
+    const filterValue = filter.trim().toLowerCase();
+    console.log(filterValue);
+    if (filterValue !== '') {
+      const filteredArr = contacts.filter(({ name }) =>
+        name.toLowerCase().includes(filterValue)
+      );
+      return filteredArr;
+    } else {
+      return contacts;
+    }
+  };
+
   render() {
     const { contacts, filter } = this.state;
+    console.log(this.filteredContacts());
+
     return (
       <div>
         <AppTitle>Phonebook</AppTitle>
@@ -47,11 +66,16 @@ export class App extends Component {
 
         <Title>Contacts</Title>
         <Filter onChange={this.handleInput} value={filter} />
-        <ContactList
-          contacts={contacts}
-          filter={filter}
-          onDelete={this.hendleDelete}
-        />
+        {this.filteredContacts().length === 0 ? (
+          <DefaultMessage>
+            There is no any contact yet. Please, add a contact.
+          </DefaultMessage>
+        ) : (
+          <ContactList
+            contacts={this.filteredContacts()}
+            onDelete={this.hendleDelete}
+          />
+        )}
       </div>
     );
   }

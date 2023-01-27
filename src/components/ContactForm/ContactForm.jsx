@@ -3,7 +3,7 @@ import { Formik, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 import 'yup-phone';
 
-import Error from './ErrorMessage/ErrorMessage';
+import Error from '../ErrorMessage/ErrorMessage';
 
 import {
   AddContactForm,

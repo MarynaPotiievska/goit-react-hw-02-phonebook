@@ -17,3 +17,8 @@ export const Title = styled.h2`
   line-height: 1.5;
   color: #23537e;
 `;
+
+export const DefaultMessage = styled.p`
+  padding: 12px;
+  text-align: center;
+`;
