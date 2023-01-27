@@ -1,5 +1,14 @@
 import PropTypes from 'prop-types';
 
+import {
+  Contact,
+  ContactName,
+  ContactNumber,
+  DefaultMessage,
+  DeleteButton,
+  List,
+} from './ContactList.styled';
+
 const ContactList = ({ contacts, filter, onDelete }) => {
   const filterValue = filter.trim();
   const filteredArr = contacts.filter(({ name }) =>
@@ -7,34 +16,43 @@ const ContactList = ({ contacts, filter, onDelete }) => {
   );
 
   return (
-    <ul>
-      {filterValue === '' &&
-        contacts.map(contact => {
-          const { id, name, number } = contact;
-          return (
-            <li key={id} id={id}>
-              <p>{name}</p>
-              <p>{number}</p>
-              <button type="button" onClick={onDelete}>
-                Delete
-              </button>
-            </li>
-          );
-        })}
-      {filterValue !== '' &&
-        filteredArr.map(contact => {
-          const { id, name, number } = contact;
-          return (
-            <li key={id} id={id}>
-              <p>{name}</p>
-              <p>{number}</p>
-              <button type="button" onClick={onDelete}>
-                Delete
-              </button>
-            </li>
-          );
-        })}
-    </ul>
+    <>
+      {contacts.length === 0 && (
+        <DefaultMessage>
+          There is no any contact yet. Please, add a contact.
+        </DefaultMessage>
+      )}
+      {contacts.length > 0 && (
+        <List>
+          {filterValue === '' &&
+            contacts.map(contact => {
+              const { id, name, number } = contact;
+              return (
+                <Contact key={id} id={id}>
+                  <ContactName>{name}</ContactName>
+                  <ContactNumber>{number}</ContactNumber>
+                  <DeleteButton type="button" onClick={onDelete}>
+                    Delete
+                  </DeleteButton>
+                </Contact>
+              );
+            })}
+          {filterValue !== '' &&
+            filteredArr.map(contact => {
+              const { id, name, number } = contact;
+              return (
+                <Contact key={id} id={id}>
+                  <ContactName>{name}</ContactName>
+                  <ContactNumber>{number}</ContactNumber>
+                  <DeleteButton type="button" onClick={onDelete}>
+                    Delete
+                  </DeleteButton>
+                </Contact>
+              );
+            })}
+        </List>
+      )}
+    </>
   );
 };
 
